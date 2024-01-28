@@ -1,5 +1,11 @@
         //----------------------------------------------------------------------------------------------------------------------
         // Base
+        
+        _TemporalLightIntensity("TemporalLightIntensity",float) = 0.1
+        _TemporalLightRimPower("TemporalLightRimPower",float) = 5.0
+        _TemporalLightRimIntensity("TemporalLightRimIntensity",float) = 3.0
+        _TemporalLightBaseOffset("TemporalLightBaseOffset",float) = 0.0
+        
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
                         _AsUnlit                    ("sAsUnlit", Range(0, 1)) = 0
                         _Cutoff                     ("sCutoff", Range(-0.001,1.001)) = 0.5
