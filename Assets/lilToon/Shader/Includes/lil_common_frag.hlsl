@@ -712,13 +712,6 @@
 #endif
 
 //------------------------------------------------------------------------------------------------------------------------------
-// UDIM Discard
-#if !defined(OVERRIDE_UDIMDISCARD)
-    #define OVERRIDE_UDIMDISCARD \
-        if(_UDIMDiscardMode == 1 && LIL_CHECK_UDIMDISCARD(fd)) discard;
-#endif
-
-//------------------------------------------------------------------------------------------------------------------------------
 // Main 2nd
 #if defined(LIL_FEATURE_MAIN2ND) && !defined(LIL_LITE)
     void lilGetMain2nd(inout lilFragData fd, inout float4 color2nd, inout float main2ndDissolveAlpha LIL_SAMP_IN_FUNC(samp))
@@ -2050,9 +2043,35 @@
     #endif
 #endif
 
+
 //------------------------------------------------------------------------------------------------------------------------------
 // Output
+
+float4 _SH0;
+float4 _SH1A;
+float4 _SH1B;
+float4 _SH1C;
+float _TemporalLightIntensity;
+float _TemporalLightRimPower;
+float _TemporalLightRimIntensity;
+float _TemporalLightBaseOffset;
+float4 ApplySH(float3 normal)
+{
+    float4 c0 = _SH0 * (1.0/(2.0 * sqrt(3.1415)));
+    float4 c1 = 1.0/2.0 * sqrt(3/(2.0*3.1415)) * normal.x * _SH1A;
+    float4 c2= 1.0/2.0 * sqrt(3/(2.0*3.1415)) * normal.y * _SH1B;
+    float4 c3 = 1.0/2.0 * sqrt(3/(2.0*3.1415)) * normal.z * _SH1C;
+    return c0 + c1 + c2 + c3;
+}
+
+float4 CalcColor(float4 color,float3 normal,float3 view)
+{
+    float temporalLightAmount = _TemporalLightIntensity;
+    temporalLightAmount += pow(1.0 - clamp(abs(dot(normal,view)),0,1),_TemporalLightRimPower) * _TemporalLightRimIntensity;
+    return color * (1.0 + _TemporalLightBaseOffset) + ApplySH(normal) * temporalLightAmount;
+}
+
 #if !defined(OVERRIDE_OUTPUT)
     #define OVERRIDE_OUTPUT \
-        return fd.col;
+        return CalcColor(fd.col,fd.N,fd.V);
 #endif

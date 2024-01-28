@@ -161,7 +161,6 @@ namespace lilToon
             public bool isShowDissolveMask              = false;
             public bool isShowDissolveNoiseMask         = false;
             public bool isShowIDMask                    = false;
-            public bool isShowUDIMDiscard               = false;
             public bool isShowEncryption                = false;
             public bool isShowStencil                   = false;
             public bool isShowOutline                   = false;
@@ -188,6 +187,7 @@ namespace lilToon
             public bool isShowDefaultValueSetting       = false;
             public bool isShowVRChat                    = false;
             public bool isAlphaMaskModeAdvanced         = false;
+            public bool isShowTemporalLight = false;
             public bool[] isShowCategorys = new bool[(int)lilPresetCategory.Other+1]{false,false,false,false,false,false,false};
             public string searchKeyWord = "";
         }
@@ -735,26 +735,6 @@ namespace lilToon
         private readonly lilMaterialProperty idMaskPrior6   = new lilMaterialProperty("_IDMaskPrior6", PropertyBlock.IDMask);
         private readonly lilMaterialProperty idMaskPrior7   = new lilMaterialProperty("_IDMaskPrior7", PropertyBlock.IDMask);
         private readonly lilMaterialProperty idMaskPrior8   = new lilMaterialProperty("_IDMaskPrior8", PropertyBlock.IDMask);
-        
-        private readonly lilMaterialProperty udimDiscardCompile    = new lilMaterialProperty("_UDIMDiscardCompile", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardUV         = new lilMaterialProperty("_UDIMDiscardUV", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardMethod     = new lilMaterialProperty("_UDIMDiscardMode", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow3_0     = new lilMaterialProperty("_UDIMDiscardRow3_0", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow3_1     = new lilMaterialProperty("_UDIMDiscardRow3_1", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow3_2     = new lilMaterialProperty("_UDIMDiscardRow3_2", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow3_3     = new lilMaterialProperty("_UDIMDiscardRow3_3", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow2_0     = new lilMaterialProperty("_UDIMDiscardRow2_0", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow2_1     = new lilMaterialProperty("_UDIMDiscardRow2_1", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow2_2     = new lilMaterialProperty("_UDIMDiscardRow2_2", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow2_3     = new lilMaterialProperty("_UDIMDiscardRow2_3", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow1_0     = new lilMaterialProperty("_UDIMDiscardRow1_0", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow1_1     = new lilMaterialProperty("_UDIMDiscardRow1_1", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow1_2     = new lilMaterialProperty("_UDIMDiscardRow1_2", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow1_3     = new lilMaterialProperty("_UDIMDiscardRow1_3", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow0_0     = new lilMaterialProperty("_UDIMDiscardRow0_0", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow0_1     = new lilMaterialProperty("_UDIMDiscardRow0_1", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow0_2     = new lilMaterialProperty("_UDIMDiscardRow0_2", PropertyBlock.UDIMDiscard);
-        private readonly lilMaterialProperty udimDiscardRow0_3     = new lilMaterialProperty("_UDIMDiscardRow0_3", PropertyBlock.UDIMDiscard);
 
         private readonly lilMaterialProperty ignoreEncryption   = new lilMaterialProperty("_IgnoreEncryption", PropertyBlock.Encryption);
         private readonly lilMaterialProperty keys               = new lilMaterialProperty("_Keys", PropertyBlock.Encryption);
@@ -937,6 +917,15 @@ namespace lilToon
         private readonly lilMaterialProperty triMask                = new lilMaterialProperty("_TriMask", true, PropertyBlock.Base);
         private readonly lilMaterialProperty matcapMul              = new lilMaterialProperty("_MatCapMul", PropertyBlock.MatCaps, PropertyBlock.MatCap1st);
         private readonly lilMaterialProperty fakeShadowVector       = new lilMaterialProperty("_FakeShadowVector", PropertyBlock.Base);
+
+        private readonly lilMaterialProperty temporalLightIntensity =
+            new lilMaterialProperty("_TemporalLightIntensity", PropertyBlock.Base);
+        private readonly lilMaterialProperty temporalLightRimPower =
+            new lilMaterialProperty("_TemporalLightRimPower", PropertyBlock.Base);
+        private readonly lilMaterialProperty temporalLightRimIntensity =
+            new lilMaterialProperty("_TemporalLightRimIntensity", PropertyBlock.Base);
+        private readonly lilMaterialProperty temporalLightBaseIntensity =
+            new lilMaterialProperty("_TemporalLightBaseOffset", PropertyBlock.Base);
 
         private lilMaterialProperty[] AllProperties()
         {
@@ -1372,26 +1361,6 @@ namespace lilToon
                 idMaskPrior6,
                 idMaskPrior7,
                 idMaskPrior8,
-                
-                udimDiscardCompile,
-                udimDiscardUV,
-                udimDiscardMethod,
-                udimDiscardRow3_0,
-                udimDiscardRow3_1,
-                udimDiscardRow3_2,
-                udimDiscardRow3_3,
-                udimDiscardRow2_0,
-                udimDiscardRow2_1,
-                udimDiscardRow2_2,
-                udimDiscardRow2_3,
-                udimDiscardRow1_0,
-                udimDiscardRow1_1,
-                udimDiscardRow1_2,
-                udimDiscardRow1_3,
-                udimDiscardRow0_0,
-                udimDiscardRow0_1,
-                udimDiscardRow0_2,
-                udimDiscardRow0_3,
 
                 ignoreEncryption,
                 keys,
@@ -1574,6 +1543,11 @@ namespace lilToon
                 triMask,
                 matcapMul,
                 fakeShadowVector,
+                
+                temporalLightIntensity,
+                temporalLightBaseIntensity,
+                temporalLightRimIntensity,
+                temporalLightRimPower
             };
         }
         #endregion
@@ -1912,6 +1886,7 @@ namespace lilToon
             //------------------------------------------------------------------------------------------------------------------------------
             // Outline
             DrawOutlineSettingsSimple(material);
+            DrawTemporalLightSetting();
 
             if(mtoon != null && ShouldDrawBlock() && lilEditorGUI.Button(GetLoc("sConvertMToon"))) CreateMToonMaterial(material);
         }
@@ -3157,7 +3132,7 @@ namespace lilToon
                 // IDMask
                 if(ShouldDrawBlock(PropertyBlock.IDMask))
                 {
-                    edSet.isShowIDMask = lilEditorGUI.Foldout(GetLoc("sIDMask"), edSet.isShowIDMask);
+                    edSet.isShowIDMask = lilEditorGUI.Foldout("ID Mask", edSet.isShowIDMask);
                     DrawMenuButton(GetLoc("sAnchorIDMask"), PropertyBlock.IDMask);
                     if(edSet.isShowIDMask)
                     {
@@ -3201,70 +3176,6 @@ namespace lilToon
                         }
                         
                         EditorGUILayout.EndVertical();
-                        EditorGUILayout.EndVertical();
-                    }
-                }
-                
-                //------------------------------------------------------------------------------------------------------------------------------
-                // UDIM Discard
-                if (ShouldDrawBlock(PropertyBlock.UDIMDiscard))
-                {
-                    edSet.isShowUDIMDiscard = lilEditorGUI.Foldout(GetLoc("sUDIMDiscard"), edSet.isShowUDIMDiscard);
-                    DrawMenuButton(GetLoc("sAnchorUDIMDiscard"), PropertyBlock.UDIMDiscard);
-                    if(edSet.isShowUDIMDiscard)
-                    {
-                        EditorGUILayout.BeginVertical(boxOuter);
-                        LocalizedProperty(udimDiscardCompile); 
-                        DrawMenuButton(GetLoc("sUDIMDiscard"), PropertyBlock.UDIMDiscard);
-                        if (udimDiscardCompile.floatValue == 1)
-                        {
-                            EditorGUILayout.BeginVertical(boxInnerHalf);
-                            EditorGUILayout.HelpBox("Your model needs to be set up for this feature! Place groups of vertexes on different whole number UV tiles.", MessageType.Info);
-                            LocalizedProperty(udimDiscardUV);
-                            LocalizedProperty(udimDiscardMethod);
-
-                            void UVDIMToggle(Rect position, MaterialProperty prop)
-                            {
-                                bool value = prop.floatValue != 0.0f;
-                                EditorGUI.BeginChangeCheck();
-                                EditorGUI.showMixedValue = prop.hasMixedValue;
-                                value = EditorGUI.Toggle(position, GUIContent.none, value);
-                                EditorGUI.showMixedValue = false;
-
-                                if(EditorGUI.EndChangeCheck())
-                                {
-                                    prop.floatValue = value ? 1.0f : 0.0f;
-                                }
-                            }
-
-                            var r0 = EditorGUILayout.GetControlRect(false); r0.width = 16;
-                            var r1 = EditorGUILayout.GetControlRect(false); r1.width = 16;
-                            var r2 = EditorGUILayout.GetControlRect(false); r2.width = 16;
-                            var r3 = EditorGUILayout.GetControlRect(false); r3.width = 16;
-
-                            UVDIMToggle(r0, udimDiscardRow3_0); r0.x += 40;
-                            UVDIMToggle(r1, udimDiscardRow2_0); r1.x += 40;
-                            UVDIMToggle(r2, udimDiscardRow1_0); r2.x += 40;
-                            UVDIMToggle(r3, udimDiscardRow0_0); r3.x += 40;
-
-                            UVDIMToggle(r0, udimDiscardRow3_1); r0.x += 40;
-                            UVDIMToggle(r1, udimDiscardRow2_1); r1.x += 40;
-                            UVDIMToggle(r2, udimDiscardRow1_1); r2.x += 40;
-                            UVDIMToggle(r3, udimDiscardRow0_1); r3.x += 40;
-
-                            UVDIMToggle(r0, udimDiscardRow3_2); r0.x += 40;
-                            UVDIMToggle(r1, udimDiscardRow2_2); r1.x += 40;
-                            UVDIMToggle(r2, udimDiscardRow1_2); r2.x += 40;
-                            UVDIMToggle(r3, udimDiscardRow0_2); r3.x += 40;
-
-                            UVDIMToggle(r0, udimDiscardRow3_3);
-                            UVDIMToggle(r1, udimDiscardRow2_3);
-                            UVDIMToggle(r2, udimDiscardRow1_3);
-                            UVDIMToggle(r3, udimDiscardRow0_3);
-
-                            EditorGUILayout.EndVertical();
-                        }
-
                         EditorGUILayout.EndVertical();
                     }
                 }
@@ -5670,6 +5581,22 @@ namespace lilToon
                         EditorGUILayout.EndVertical();
                     }
                 }
+                EditorGUILayout.EndVertical();
+            }
+        }
+        
+        private void DrawTemporalLightSetting(){
+            edSet.isShowTemporalLight = lilEditorGUI.Foldout(GetLoc("sTemporalLightSetting"), edSet.isShowTemporalLight);
+            if (edSet.isShowTemporalLight)
+            {
+                EditorGUILayout.BeginVertical(boxOuter);
+                GUILayout.Label(GetLoc("TemporalLightSettings"));
+                EditorGUILayout.BeginVertical(boxInnerHalf);
+                LocalizedProperty(temporalLightIntensity);
+                LocalizedProperty(temporalLightBaseIntensity);
+                LocalizedProperty(temporalLightRimIntensity);
+                LocalizedProperty(temporalLightRimPower);
+                EditorGUILayout.EndVertical();
                 EditorGUILayout.EndVertical();
             }
         }

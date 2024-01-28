@@ -2,6 +2,10 @@ Shader "Hidden/ltspass_lite_opaque"
 {
     Properties
     {
+        _TemporalLightIntensity("TemporalLightIntensity",float) = 0.1
+        _TemporalLightRimPower("TemporalLightRimPower",float) = 5.0
+        _TemporalLightRimIntensity("TemporalLightRimIntensity",float) = 3.0
+        _TemporalLightBaseOffset("TemporalLightBaseOffset",float) = 0.0
         //----------------------------------------------------------------------------------------------------------------------
         // Base
         [lilToggle]     _Invisible                  ("sInvisible", Int) = 0
@@ -87,7 +91,7 @@ Shader "Hidden/ltspass_lite_opaque"
         [HideInInspector]                               _BaseColor          ("sColor", Color) = (1,1,1,1)
         [HideInInspector]                               _BaseMap            ("Texture", 2D) = "white" {}
         [HideInInspector]                               _BaseColorMap       ("Texture", 2D) = "white" {}
-        [HideInInspector]                               _lilToonVersion     ("Version", Int) = 42
+        [HideInInspector]                               _lilToonVersion     ("Version", Int) = 39
 
         //----------------------------------------------------------------------------------------------------------------------
         // Advanced

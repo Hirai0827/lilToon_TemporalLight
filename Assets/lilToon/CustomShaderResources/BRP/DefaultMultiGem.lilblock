@@ -18,7 +18,6 @@
             #define LIL_MULTI_INPUTS_AUDIOLINK
             #define LIL_MULTI_INPUTS_DISSOLVE
             #define LIL_MULTI_INPUTS_IDMASK
-            #define LIL_MULTI_INPUTS_UDIMDISCARD
 
             #pragma lil_skip_variants_shadows
             #pragma lil_skip_variants_decals
@@ -36,7 +35,6 @@
         Pass
         {
             Name "FORWARD_PRE"
-            Tags {"LightMode" = "*LIL_LIGHTMODE_FORWARD_0*"}
             Stencil
             {
                 Ref [_StencilRef]

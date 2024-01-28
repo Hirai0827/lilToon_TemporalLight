@@ -22,7 +22,6 @@
         Pass
         {
             Name "FORWARD_PRE"
-            Tags {"LightMode" = "*LIL_LIGHTMODE_FORWARD_0*"}
             Stencil
             {
                 Ref [_StencilRef]

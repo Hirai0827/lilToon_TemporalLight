@@ -2,6 +2,10 @@ Shader "Hidden/ltsother_baker"
 {
     Properties
     {
+        _TemporalLightIntensity("TemporalLightIntensity",float) = 0.1
+        _TemporalLightRimPower("TemporalLightRimPower",float) = 5.0
+        _TemporalLightRimIntensity("TemporalLightRimIntensity",float) = 3.0
+        _TemporalLightBaseOffset("TemporalLightBaseOffset",float) = 0.0
         //----------------------------------------------------------------------------------------------------------------------
         // Main
         [lilHDR]        _Color                      ("Color", Color) = (1,1,1,1)
@@ -110,7 +114,6 @@ Shader "Hidden/ltsother_baker"
             #define LIL_FEATURE_DISSOLVE
             #define LIL_FEATURE_DITHER
             #define LIL_FEATURE_IDMASK
-            #define LIL_FEATURE_UDIMDISCARD
             #define LIL_FEATURE_OUTLINE_TONE_CORRECTION
             #define LIL_FEATURE_OUTLINE_RECEIVE_SHADOW
             #define LIL_FEATURE_ANIMATE_OUTLINE_UV
